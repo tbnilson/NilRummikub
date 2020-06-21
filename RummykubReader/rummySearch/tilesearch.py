@@ -54,8 +54,8 @@ class TileDetector:
         img_area_frac = self.image.shape[0] * self.image.shape[1] * .005
 
         for c in cnts:
-            poly = self.detect(c, 0.04)
-            if len(poly)==4:
+            poly = self.detect(c, 0.02)
+            if len(poly)%4==0 & len(poly)<20:
                 if cv2.contourArea(poly) > img_area_frac:
                     tiles.append(poly)
 

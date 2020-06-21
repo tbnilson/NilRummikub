@@ -52,7 +52,10 @@ while True:
     cnts, heirarchy = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     tiles = td.find_tiles(cnts)
 
-    cv2.drawContours(img_masked, tiles, -1, (0, 255, 0), 3)
+    tilemask = np.zeros(td.image.shape[:2], np.uint8)
+    cv2.drawContours(tilemask, tiles, -1, 255, -1)
+    img_masked = cv2.bitwise_and(td.image, td.image, mask=tilemask)
+
     cv2.imshow("mask", img_masked)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
