@@ -1,3 +1,5 @@
+import pickle
+
 from rummySearch.tilesearch import TileDetector, order_points
 import cv2
 import imutils
@@ -14,5 +16,8 @@ tile_images = td.get_tile_images()
 
 for i, tile in enumerate(tile_images):
     cv2.imshow(str(i), tile)
+
+
+pickle.dump(tile_images, open("rummySearch/dump.pickle", "wb"))
 
 cv2.waitKey(0)
