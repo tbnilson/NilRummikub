@@ -112,7 +112,7 @@ class TileDetector:
 
         for c in cnts:
             poly = self.detect(c, 0.02)
-            if len(poly) % 4 != 0 and len(poly) > 4:
+            if len(poly) != 4:
                 continue
             elif cv2.contourArea(poly) > img_area_frac:
                 tiles.append(poly)
@@ -151,15 +151,15 @@ class TileDetector:
             intensity_zero = self.get_threshold(image=tile_image_zerorotation)
             intensity_ninety = self.get_threshold(image=tile_image_ninetyrotation)
 
-            print("First dim of gray image", len(gray_zero))
+            # print("First dim of gray image", len(gray_zero))
 
             zero_sum_high = np.sum(intensity_zero[:len(intensity_zero) // 2], dtype="int32")
             zero_sum_low = np.sum(intensity_zero[len(intensity_zero) // 2:], dtype="int32")
 
             ninety_sum_high = np.sum(intensity_ninety[:len(intensity_ninety) // 2], dtype="int32")
             ninety_sum_low = np.sum(intensity_ninety[len(intensity_ninety) // 2:], dtype="int32")
-            print(ninety_sum_high - ninety_sum_low)
-            print(zero_sum_high - zero_sum_low)
+            # print(ninety_sum_high - ninety_sum_low)
+            # print(zero_sum_high - zero_sum_low)
             if abs(zero_sum_high - zero_sum_low) > abs(ninety_sum_high - ninety_sum_low):
                 tile_images.append(
                     intensity_zero if zero_sum_high < zero_sum_low else cv2.rotate(intensity_zero,
