@@ -1,3 +1,4 @@
+import time
 from typing import Any
 
 import cv2
@@ -120,7 +121,11 @@ class TileDetector:
         return tiles
 
     def get_tile_images(self, width=200, height=300):
+        tic = time.time()
         thresh_tiles, _ = self.get_tile_contours()
+        toc = time.time()
+        print("get_tile_contours()",toc-tic)
+        tic = time.time()
         tile_rect = np.float32([[0, 0],
                                 [width, 0],
                                 [width, height],
@@ -168,4 +173,7 @@ class TileDetector:
                 tile_images.append(
                     intensity_ninety if ninety_sum_high < ninety_sum_low else cv2.rotate(
                         intensity_ninety, cv2.ROTATE_180))
+
+        toc = time.time()
+        print("get_tile_images()", toc-tic)
         return tile_images

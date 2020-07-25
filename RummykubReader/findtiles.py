@@ -50,7 +50,7 @@ while True:
     if args["source"] == "webcam":
         ret, image = cap.read()
 
-    td.set_image(image, resize_width=960)
+    td.set_image(image, resize_width=480)
     cv2.imshow("Original Image", td.image)
     tile_images = td.get_tile_images()
     # print(len(tile_images))
